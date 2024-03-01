@@ -26,4 +26,8 @@
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DB_Soft.DataAccess\DB_Soft.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
