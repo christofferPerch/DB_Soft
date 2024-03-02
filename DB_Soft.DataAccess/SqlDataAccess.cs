@@ -31,24 +31,100 @@ namespace DB_Soft.DataAccess
             }
         }
 
-        public Task<T?> GetById<T>(string sql, object parameters) =>
-            WithConnection(db => db.QueryAsync<T>(sql, parameters).ContinueWith(t => t.Result.FirstOrDefault()));
+        public async Task<T?> GetById<T>(string sql, object parameters)
+        {
+            try
+            {
+                return await WithConnection(async db =>
+                {
+                    var result = await db.QueryFirstOrDefaultAsync<T>(sql, parameters);
+                    return result;
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error executing GetById: {ex.Message}", ex);
+            }
+        }
 
-        public Task<List<T>> GetAll<T>(string sql, object? parameters = null) =>
-            WithConnection(db => db.QueryAsync<T>(sql, parameters).ContinueWith(t => t.Result.ToList()));
+        public async Task<List<T>> GetAll<T>(string sql, object? parameters = null)
+        {
+            try
+            {
+                return await WithConnection(async db =>
+                {
+                    var result = await db.QueryAsync<T>(sql, parameters);
+                    return result.ToList();
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error executing GetAll: {ex.Message}", ex);
+            }
+        }
 
-        public Task<int> Insert(string sql, object parameters) =>
-            WithConnection(db => db.ExecuteAsync(sql, parameters));
+        public async Task<int> Insert(string sql, object parameters)
+        {
+            try
+            {
+                return await WithConnection(async db =>
+                {
+                    var result = await db.ExecuteAsync(sql, parameters);
+                    return result;
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error executing Insert: {ex.Message}", ex);
+            }
+        }
 
-        public Task<int> Update(string sql, object parameters) =>
-            WithConnection(db => db.ExecuteAsync(sql, parameters));
+        public async Task<int> Update(string sql, object parameters)
+        {
+            try
+            {
+                return await WithConnection(async db =>
+                {
+                    var result = await db.ExecuteAsync(sql, parameters);
+                    return result;
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error executing Update: {ex.Message}", ex);
+            }
+        }
 
-        public Task<int> Delete(string sql, object parameters) =>
-            WithConnection(db => db.ExecuteAsync(sql, parameters));
+        public async Task<int> Delete(string sql, object parameters)
+        {
+            try
+            {
+                return await WithConnection(async db =>
+                {
+                    var result = await db.ExecuteAsync(sql, parameters);
+                    return result;
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error executing Delete: {ex.Message}", ex);
+            }
+        }
 
-        public Task<T?> ExecuteStoredProcedure<T>(string procedureName, object parameters) =>
-            WithConnection(db => db.QueryFirstOrDefaultAsync<T>(
-                procedureName, parameters, commandType: CommandType.StoredProcedure));
-
+        public async Task<T?> ExecuteStoredProcedure<T>(string procedureName, object parameters)
+        {
+            try
+            {
+                return await WithConnection(async db =>
+                {
+                    var result = await db.QueryFirstOrDefaultAsync<T>(procedureName, parameters, commandType: CommandType.StoredProcedure);
+                    return result;
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error executing ExecuteStoredProcedure: {ex.Message}", ex);
+            }
+        }
     }
 }
