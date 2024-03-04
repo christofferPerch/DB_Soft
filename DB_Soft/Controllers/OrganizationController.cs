@@ -44,8 +44,7 @@ namespace DB_Soft.Controllers
             return new JsonResult(table);
         }
 
-        // New method to get organization emissions for a specific year
-        // Modify this method in your OrganizationController
+   
         [HttpGet("Emissions")]
         public JsonResult GetEmissions(string reportingYear, string organizationName)
         {
