@@ -7,6 +7,8 @@
         public string TotalCityEmissions { get; set; }
         public string EmissionChange {  get; set; }
         public string ReportingYear { get; set; }
+        public string Comment { get; set; }
+
 
     }
 }
