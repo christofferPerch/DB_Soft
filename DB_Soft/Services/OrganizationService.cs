@@ -3,6 +3,7 @@ using DB_Soft.Models;
 using DB_Soft.ViewModels;
 using Dapper;
 using System.Data;
+using System.Text.Json; // Include the System.Text.Json namespace
 
 namespace DB_Soft.Services
 {
@@ -15,15 +16,10 @@ namespace DB_Soft.Services
             _dataAccess = dataAccess ?? throw new ArgumentNullException(nameof(dataAccess));
         }
 
-        public async Task<List<OrganizationViewModel>> GetAllOrganizationsWithNames()
+        public async Task<string> GetOrganizationWithCountriesAsJson()
         {
-            var SqlStr = = @"SELECT *
-                             FROM ChatBot AS cb                           
-                             WHERE cb.UserId = @UserId";
-
-            return await _dataAccess.GetAll<OrganizationViewModel>(SqlStr);
-
+            var organizations = await _dataAccess.ExecuteStoredProcedureNoParameters<List<OrganizationViewModel>>("SP_OrganizationWithCountries");
+            return JsonSerializer.Serialize(organizations);
         }
-
     }
 }

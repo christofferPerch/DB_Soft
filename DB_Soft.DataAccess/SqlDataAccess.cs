@@ -126,5 +126,21 @@ namespace DB_Soft.DataAccess
                 throw new Exception($"Error executing ExecuteStoredProcedure: {ex.Message}", ex);
             }
         }
+
+        public async Task<T?> ExecuteStoredProcedureNoParameters<T>(string procedureName)
+        {
+            try
+            {
+                return await WithConnection(async db =>
+                {
+                    var result = await db.QueryFirstOrDefaultAsync<T>(procedureName, commandType: CommandType.StoredProcedure);
+                    return result;
+                });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error executing ExecuteStoredProcedure: {ex.Message}", ex);
+            }
+        }
     }
 }

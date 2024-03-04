@@ -14,6 +14,8 @@ namespace DB_Soft.DataAccess
         Task<int> Update(string sql, object parameters);
         Task<int> Delete(string sql, object parameters);
         Task<T?> ExecuteStoredProcedure<T>(string procedureName, object parameters);
+        Task<T?> ExecuteStoredProcedureNoParameters<T>(string procedureName);
+
 
     }
 }
